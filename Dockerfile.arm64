@@ -1,7 +1,9 @@
-FROM --platform=linux/arm64 alpine:latest
+FROM alpine:latest
 RUN apk add --no-cache ca-certificates tzdata
-# 将 Action 编译好的二进制和前端文件拷入
+# 拷贝编译好的二进制
 COPY v2raya_arm64 /usr/bin/v2raya
-COPY web_files /etc/v2raya/web
+RUN chmod +x /usr/bin/v2raya
 EXPOSE 2017
+# 官方默认数据目录
+VOLUME /etc/v2raya
 ENTRYPOINT ["v2raya"]
